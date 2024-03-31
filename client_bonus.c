@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msabri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: msabri <msabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 21:56:32 by msabri            #+#    #+#             */
-/*   Updated: 2024/03/31 00:20:53 by msabri           ###   ########.fr       */
+/*   Updated: 2024/03/31 12:39:13 by msabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,14 @@ void	handler(int s)
 
 int	main(int ac, char **v)
 {
-	int pid;
+	int	pid;
+	int	i;
+
+	i = 0;
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
 	if (ac != 3)
-	{
 		write(1, "bad using \n USAGE : ./client [PID] [MSG]\n", 42);
-	}
-	int i = 0;
 	while (v[1][i])
 	{
 		if (!(v[1][i] >= '0' && v[1][i] <= '9'))

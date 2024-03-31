@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msabri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: msabri <msabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 21:56:29 by msabri            #+#    #+#             */
-/*   Updated: 2024/03/31 01:25:02 by msabri           ###   ########.fr       */
+/*   Updated: 2024/03/31 12:39:50 by msabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,10 @@ void	reponse(pid_t pid)
 
 void	handler(int s, siginfo_t *siginfo, void *context)
 {
-	static int	i;
-	static int	ctr;
+	static int	i = 0;
+	static int	ctr = 0;
 
-	i = 0;
-	ctr = 0;
 	(void)context;
-    
 	if (s == SIGUSR1)
 	{
 		ctr = ctr << 1;
@@ -73,8 +70,8 @@ void	handler(int s, siginfo_t *siginfo, void *context)
 
 int	main(void)
 {
-	int pid;
-	struct sigaction sa;
+	int					pid;
+	struct sigaction	sa;
 
 	pid = getpid();
 	sa.sa_sigaction = handler;

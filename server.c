@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msabri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: msabri <msabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 21:56:37 by msabri            #+#    #+#             */
-/*   Updated: 2024/03/31 00:21:03 by msabri           ###   ########.fr       */
+/*   Updated: 2024/03/31 13:48:28 by msabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,41 +38,38 @@ void	putnbr(int n)
 
 void	sighandler(int s)
 {
+	static char	char_bit;
 	static int	i;
-	static int	gtr;
 
-	i = 0;
-	gtr = 0;
+	char_bit = char_bit << 1;
 	if (s == SIGUSR1)
-	{
-		gtr = gtr << 1;
-		gtr = gtr | 1;
-	}
-	else
-	{
-		gtr = gtr << 1;
-	}
-	if (i == 7)
-	{
-		write(1, &gtr, 1);
-		gtr = 0;
-		i = 0;
-		return ;
-	}
+		char_bit = char_bit | 1;
 	i++;
+	if (char_bit && i > 7)
+	{
+		write(1, &char_bit, 1);
+		char_bit = 0;
+		i = 0;
+	}
+	else if (!char_bit && i > 7)
+	{
+		char_bit = 0;
+		i = 0;
+	}
 }
 
 int	main(void)
 {
-	int p = getpid();
-	write(1, "WELCOME TO MINITALK\nPID :", 26);
+	int	p;
+
+	p = getpid();
+	write(1, "WELCOME TO MINITALK\nPID : ", 26);
 	putnbr(p);
 	write(1, "\n", 1);
 	signal(SIGUSR1, sighandler);
 	signal(SIGUSR2, sighandler);
 	while (1)
 	{
-		pause();
 	}
 	return (0);
 }

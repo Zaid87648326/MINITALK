@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msabri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: msabri <msabri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 21:57:01 by msabri            #+#    #+#             */
-/*   Updated: 2024/03/31 00:20:58 by msabri           ###   ########.fr       */
+/*   Updated: 2024/03/31 13:49:07 by msabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,6 @@ int	ft_atoi(char *s)
 	return (num * sign);
 }
 
-void	new_line(int pid)
-{
-	int	j;
-	int	bit;
-
-	j = 7;
-	bit = 0;
-	while (j >= 0)
-	{
-		bit = '\n' >> j;
-		if (bit & 1)
-			kill(pid, SIGUSR1);
-		else
-			kill(pid, SIGUSR2);
-		j--;
-		usleep(250);
-	}
-}
-
 void	send(char *msg, int pid)
 {
 	int	i;
@@ -63,7 +44,7 @@ void	send(char *msg, int pid)
 	int	bit;
 
 	i = 0;
-	while (msg[i] != '\0')
+	while (msg[i])
 	{
 		j = 7;
 		bit = 0;
@@ -75,11 +56,10 @@ void	send(char *msg, int pid)
 			else
 				kill(pid, SIGUSR2);
 			j--;
-			usleep(250);
+			usleep(150);
 		}
 		i++;
 	}
-	new_line(pid);
 }
 
 int	main(int ac, char **av)
